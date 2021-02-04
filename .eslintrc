@@ -9,7 +9,7 @@
     "plugin:@typescript-eslint/recommended"
   ],
   "rules": {
-    "prettier/prettier": ["error"],
-    "no-console": 2
+    "prettier/prettier": ["error"]
+    // "no-console": 2
   }
 }
