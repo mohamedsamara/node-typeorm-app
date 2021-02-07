@@ -1,5 +1,7 @@
 import { ServerRoute } from '@hapi/hapi';
+
 import * as book from './book';
+import * as author from './author';
 
 export const api: ServerRoute = {
   method: 'GET',
@@ -13,12 +15,30 @@ export const api: ServerRoute = {
   }
 };
 
+export const favicon: ServerRoute = {
+  method: 'GET',
+  path: '/favicon.ico',
+  handler: (request, reply) => {
+    return reply.file('public/favicon.ico');
+  }
+};
+
 export const error: ServerRoute = {
   method: '*',
   path: '/{any*}',
   handler: () => {
-    return '404 Error! Page Not Found!';
+    return '404!';
   }
 };
 
-export const routes: ServerRoute[] = [api, error, book.getBooks, book.getBook];
+export const routes: ServerRoute[] = [
+  api,
+  favicon,
+  error,
+  book.getBooks,
+  book.getBook,
+  book.addBook,
+  author.getAuthors,
+  author.getAuthor,
+  author.addAuthor
+];

@@ -1,4 +1,12 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToMany,
+  JoinTable
+} from 'typeorm';
+
+import { Author } from './Author';
 
 @Entity()
 export class Book {
@@ -13,4 +21,10 @@ export class Book {
 
   @Column()
   price!: number;
+
+  @ManyToMany(() => Author, (author) => author.books, {
+    cascade: true
+  })
+  @JoinTable()
+  authors!: Author[];
 }
