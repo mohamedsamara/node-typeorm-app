@@ -4,30 +4,30 @@ import BookController from '../controllers/book';
 
 export const getBooks: ServerRoute = {
   method: 'GET',
-  path: '/books',
+  path: '/api/books',
   handler: BookController.getBooks,
   options: {
     description: 'Get books list',
-    tags: ['api']
+    tags: ['api', 'books']
   }
 };
 
 export const getBook: ServerRoute = {
   method: 'GET',
-  path: '/books/{id}',
+  path: '/api/books/{id}',
   handler: BookController.getBook,
   options: {
     description: 'Get book',
-    tags: ['api']
+    tags: ['api', 'books']
   }
 };
 
 export const addBook: ServerRoute = {
   method: 'POST',
-  path: '/books',
+  path: '/api/books',
   handler: BookController.addBook,
   options: {
     description: 'Add book',
-    tags: ['api']
+    tags: ['api', 'books']
   }
 };

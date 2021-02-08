@@ -27,7 +27,9 @@ class AuthorController {
       const id = request.params.id;
       const authorRepository = getRepository(Author);
 
-      const author = await authorRepository.findOne(id);
+      const author = await authorRepository.findOne(id, {
+        relations: ['books']
+      });
 
       return toolkit.response(author);
     } catch (error) {
@@ -40,19 +42,23 @@ class AuthorController {
       const { name }: any = request.payload;
 
       const bookRepository = getRepository(Book);
+      const bookOne = new Book();
+      bookOne.title = 'test book';
+      bookOne.description = 'test book description';
+      bookOne.price = 200;
 
-      const book = new Book();
-      book.title = 'test book';
-      book.description = 'test book description';
-      book.price = 200;
+      const bookTwo = new Book();
+      bookTwo.title = 'test book two';
+      bookTwo.description = 'test book description two';
+      bookTwo.price = 100;
 
-      const savedBook = await bookRepository.save(book);
+      const savedBookOne = await bookRepository.save(bookOne);
+      const savedBookTwo = await bookRepository.save(bookTwo);
 
       const authorRepository = getRepository(Author);
-
       const author = new Author();
       author.name = name;
-      author.books = [savedBook];
+      author.books = [savedBookOne, savedBookTwo];
 
       const savedAuthor = await authorRepository.save(author);
 

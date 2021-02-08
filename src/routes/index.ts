@@ -1,4 +1,4 @@
-import { ServerRoute } from '@hapi/hapi';
+import { ServerRoute, Request, ResponseToolkit } from '@hapi/hapi';
 
 import * as book from './book';
 import * as author from './author';
@@ -18,7 +18,7 @@ export const api: ServerRoute = {
 export const favicon: ServerRoute = {
   method: 'GET',
   path: '/favicon.ico',
-  handler: (request, reply) => {
+  handler: (request: Request, reply: ResponseToolkit) => {
     return reply.file('public/favicon.ico');
   }
 };
