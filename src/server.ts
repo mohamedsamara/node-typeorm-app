@@ -14,13 +14,15 @@ export default async () => {
   });
 
   try {
-    logger.info('Server running on %s', server.info.uri);
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    server.validator(require('@hapi/joi'));
 
     await server.route(routes);
-
     await server.register(swagger);
-
     await server.start();
+
+    logger.info('Server running on %s', server.info.uri);
+
     return server;
   } catch (error) {
     logger.error(error);
