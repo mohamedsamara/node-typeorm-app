@@ -1,4 +1,5 @@
 import * as Hapi from '@hapi/hapi';
+import * as Boom from '@hapi/boom';
 
 import { getRepository } from 'typeorm';
 
@@ -7,22 +8,24 @@ import { Author } from '../entity/Author';
 import { Book } from '../entity/Book';
 
 class AuthorController {
-  static async getAuthors(
-    request: Hapi.Request,
-    toolkit: Hapi.ResponseToolkit
-  ) {
+  static async getAuthors(_: any, h: Hapi.ResponseToolkit) {
     try {
       const authorRepository = getRepository(Author);
 
       const authors = await authorRepository.find({ relations: ['books'] });
 
-      return toolkit.response(authors);
+      if (authors.length > 0) {
+        return h.response(authors).code(200);
+      } else {
+        return h.response().code(404);
+      }
     } catch (error) {
-      return toolkit.response('not found');
+      logger.error(error);
+      return Boom.badImplementation('failed to get authors');
     }
   }
 
-  static async getAuthor(request: Hapi.Request, toolkit: Hapi.ResponseToolkit) {
+  static async getAuthor(request: Hapi.Request, h: Hapi.ResponseToolkit) {
     try {
       const id = request.params.id;
       const authorRepository = getRepository(Author);
@@ -31,13 +34,18 @@ class AuthorController {
         relations: ['books']
       });
 
-      return toolkit.response(author);
+      if (!author) {
+        return h.response().code(404);
+      } else {
+        return h.response(author).code(200);
+      }
     } catch (error) {
-      return toolkit.response('not found');
+      logger.error(error);
+      return Boom.badImplementation('failed to get author');
     }
   }
 
-  static async addAuthor(request: Hapi.Request, toolkit: Hapi.ResponseToolkit) {
+  static async addAuthor(request: Hapi.Request, h: Hapi.ResponseToolkit) {
     try {
       const { name }: any = request.payload;
 
@@ -62,10 +70,10 @@ class AuthorController {
 
       const savedAuthor = await authorRepository.save(author);
 
-      return toolkit.response(savedAuthor);
+      return h.response(savedAuthor).code(201);
     } catch (error) {
       logger.error(error);
-      return toolkit.response('not found');
+      return Boom.badImplementation('failed to add author');
     }
   }
 }

@@ -1,4 +1,5 @@
 import * as Hapi from '@hapi/hapi';
+import * as Boom from '@hapi/boom';
 
 import { getRepository } from 'typeorm';
 
@@ -7,35 +8,45 @@ import { Book } from '../entity/Book';
 import { Author } from '../entity/Author';
 
 class BookController {
-  static async getBooks(request: Hapi.Request, toolkit: Hapi.ResponseToolkit) {
+  static async getBooks(_: any, h: Hapi.ResponseToolkit) {
     try {
       const bookRepository = getRepository(Book);
 
       const books = await bookRepository.find({ relations: ['authors'] });
 
-      return toolkit.response(books);
+      if (books.length > 0) {
+        return h.response(books).code(200);
+      } else {
+        return h.response().code(404);
+      }
     } catch (error) {
-      return toolkit.response('not found');
+      logger.error(error);
+      return Boom.badImplementation('failed to get books');
     }
   }
 
-  static async getBook(request: Hapi.Request, toolkit: Hapi.ResponseToolkit) {
+  static async getBook(request: Hapi.Request, h: Hapi.ResponseToolkit) {
     try {
       const id = request.params.id;
 
       const bookRepository = getRepository(Book);
 
-      const books = await bookRepository.findOne(id, {
+      const book = await bookRepository.findOne(id, {
         relations: ['authors']
       });
 
-      return toolkit.response(books);
+      if (!book) {
+        return h.response().code(404);
+      } else {
+        return h.response(book).code(200);
+      }
     } catch (error) {
-      return toolkit.response('not found');
+      logger.error(error);
+      return Boom.badImplementation('failed to get book');
     }
   }
 
-  static async addBook(request: Hapi.Request, toolkit: Hapi.ResponseToolkit) {
+  static async addBook(request: Hapi.Request, h: Hapi.ResponseToolkit) {
     try {
       const { title, description, price }: any = request.payload;
 
@@ -57,10 +68,10 @@ class BookController {
 
       const savedBook = await bookRepository.save(book);
 
-      return toolkit.response(savedBook);
+      return h.response(savedBook).code(201);
     } catch (error) {
       logger.error(error);
-      return toolkit.response('not found');
+      return Boom.badImplementation('failed to add book');
     }
   }
 }
