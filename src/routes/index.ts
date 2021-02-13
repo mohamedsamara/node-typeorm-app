@@ -38,7 +38,11 @@ export const routes: ServerRoute[] = [
   book.getBooks,
   book.getBook,
   book.addBook,
+  book.updateBook,
+  book.deleteBook,
   author.getAuthors,
   author.getAuthor,
-  author.addAuthor
+  author.addAuthor,
+  author.updateAuthor,
+  author.deleteAuthor
 ];

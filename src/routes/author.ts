@@ -34,3 +34,25 @@ export const addAuthor: ServerRoute = {
     tags: ['api', 'authors']
   }
 };
+
+export const updateAuthor: ServerRoute = {
+  method: 'PUT',
+  path: '/api/authors/{id}',
+  handler: AuthorController.updateAuthor,
+  options: {
+    validate: authorValidator.updateById,
+    description: 'Update Author',
+    tags: ['api', 'authors']
+  }
+};
+
+export const deleteAuthor: ServerRoute = {
+  method: 'DELETE',
+  path: '/api/authors/{id}',
+  handler: AuthorController.deleteAuthor,
+  options: {
+    validate: authorValidator.deleteById,
+    description: 'Delete Author',
+    tags: ['api', 'authors']
+  }
+};

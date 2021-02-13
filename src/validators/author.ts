@@ -10,5 +10,15 @@ export default {
     params: {
       id: Joi.string().required()
     }
+  },
+  updateById: {
+    params: {
+      id: Joi.string().required()
+    }
+  },
+  deleteById: {
+    params: {
+      id: Joi.string().required()
+    }
   }
 };

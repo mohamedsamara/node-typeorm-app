@@ -17,7 +17,7 @@ class AuthorController {
       if (authors.length > 0) {
         return h.response(authors).code(200);
       } else {
-        return h.response().code(404);
+        return h.response('No authors Found.').code(404);
       }
     } catch (error) {
       logger.error(error);
@@ -35,7 +35,7 @@ class AuthorController {
       });
 
       if (!author) {
-        return h.response().code(404);
+        return h.response('No Author Found.').code(404);
       } else {
         return h.response(author).code(200);
       }
@@ -74,6 +74,46 @@ class AuthorController {
     } catch (error) {
       logger.error(error);
       return Boom.badImplementation('failed to add author');
+    }
+  }
+
+  static async updateAuthor(request: Hapi.Request, h: Hapi.ResponseToolkit) {
+    try {
+      const id = request.params.id;
+      const { name }: any = request.payload;
+
+      const authorRepository = getRepository(Author);
+
+      // eslint-disable-next-line prefer-const
+      let authorToUpdate = await authorRepository.findOne(id);
+
+      if (!authorToUpdate) {
+        return h.response().code(404);
+      }
+
+      authorToUpdate.name = name;
+
+      const updatedAuthor = await authorRepository.save(authorToUpdate);
+
+      return h.response(updatedAuthor).code(201);
+    } catch (error) {
+      logger.error(error);
+      return Boom.badImplementation('failed to update author');
+    }
+  }
+
+  static async deleteAuthor(request: Hapi.Request, h: Hapi.ResponseToolkit) {
+    try {
+      const id = request.params.id;
+
+      const authorRepository = getRepository(Author);
+
+      const deletedAuthor = await authorRepository.delete(id);
+
+      return h.response(deletedAuthor).code(200);
+    } catch (error) {
+      logger.error(error);
+      return Boom.badImplementation('failed to delete author');
     }
   }
 }

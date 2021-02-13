@@ -17,7 +17,7 @@ class BookController {
       if (books.length > 0) {
         return h.response(books).code(200);
       } else {
-        return h.response().code(404);
+        return h.response('No Books Found.').code(404);
       }
     } catch (error) {
       logger.error(error);
@@ -36,7 +36,7 @@ class BookController {
       });
 
       if (!book) {
-        return h.response().code(404);
+        return h.response('No Book Found.').code(404);
       } else {
         return h.response(book).code(200);
       }
@@ -72,6 +72,48 @@ class BookController {
     } catch (error) {
       logger.error(error);
       return Boom.badImplementation('failed to add book');
+    }
+  }
+
+  static async updateBook(request: Hapi.Request, h: Hapi.ResponseToolkit) {
+    try {
+      const id = request.params.id;
+      const { title, description, price }: any = request.payload;
+
+      const bookRepository = getRepository(Book);
+
+      // eslint-disable-next-line prefer-const
+      let bookToUpdate = await bookRepository.findOne(id);
+
+      if (!bookToUpdate) {
+        return h.response().code(404);
+      }
+
+      bookToUpdate.title = title;
+      bookToUpdate.description = description;
+      bookToUpdate.price = price;
+
+      const updatedBook = await bookRepository.save(bookToUpdate);
+
+      return h.response(updatedBook).code(201);
+    } catch (error) {
+      logger.error(error);
+      return Boom.badImplementation('failed to update book');
+    }
+  }
+
+  static async deleteBook(request: Hapi.Request, h: Hapi.ResponseToolkit) {
+    try {
+      const id = request.params.id;
+
+      const bookRepository = getRepository(Book);
+
+      const deletedBook = await bookRepository.delete(id);
+
+      return h.response(deletedBook).code(200);
+    } catch (error) {
+      logger.error(error);
+      return Boom.badImplementation('failed to delete book');
     }
   }
 }
