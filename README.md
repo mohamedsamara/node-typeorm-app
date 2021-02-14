@@ -1,54 +1,53 @@
 # Node TypeORM App
 
-* features:   
-  * Node provides the backend environment for this application
-  * Express middleware is used to handle requests, routes
+# Description
 
-## Install
+<dl>
+<dt>
+    This project is a template starter example of using Node and Hapi framework with TypeORM.
+</dt>
+</dl>
 
-Some basic Git commands are:
+## Features
 
-```
-$ git clone https://github.com/mohamedsamara/node-typeorm-app.git
-$ cd project
-$ npm install
+<dl>
+<dt>Libraries Used</dt>
 
-```  
+- [Node](https://nodejs.org/en/)
+
+- [Hapi](https://hapi.dev/)
+
+- [TypeORM](https://typeorm.io/)
+
+- [Swagger](https://swagger.io/)
+
+</dl>
+
+
+## Quick start
+
+1.  Clone this repo using `git clone https://github.com/mohamedsamara/node-typeorm-app.git`
+2.  Move to the directory: `cd <PROJECT_NAME>`.<br />
+3.  Run `npm install` in order to install dependencies.<br />
+
 
 ## Run the application for development
 
 ```
-$ npm start
-
+$ npm run start:dev
 ```
 
 ## Run the application for production
 
 ```
-$ npm run production
-
+$ npm start
 ```
 
 ## Run the code linter
 
 ```
 $ npm run lint:fix
-
 ```
-
-## Languages & tools
-
-- [Node](https://nodejs.org/en/)
-
-- [Express](https://expressjs.com/)
-
-- [TypeORM](https://typeorm.io)
-
-- [React](https://reactjs.org/)
-
-- [Webpack](https://webpack.js.org/)
-
-- [ESLint](https://eslint.org/)
 
 
 
