@@ -1,4 +1,5 @@
 import * as Hapi from '@hapi/hapi';
+import { createConnection } from 'typeorm';
 
 import config from './config';
 import logger from './plugins/logger';
@@ -7,8 +8,8 @@ import { routes } from './routes';
 
 const { port } = config;
 
-export default async () => {
-  const server = await new Hapi.Server({
+export default async (): Promise<Hapi.Server> => {
+  const server: Hapi.Server = await new Hapi.Server({
     host: 'localhost',
     port
   });
@@ -20,6 +21,7 @@ export default async () => {
     await server.route(routes);
     await server.register(swagger);
     await server.start();
+    await createConnection();
 
     logger.info('Server running on %s', server.info.uri);
 
