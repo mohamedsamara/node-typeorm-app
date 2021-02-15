@@ -1,10 +1,13 @@
 import * as Hapi from '@hapi/hapi';
 import { createConnection } from 'typeorm';
+import Joi from 'joi';
 
 import config from './config';
 import logger from './plugins/logger';
-import swagger from './plugins/swagger';
+import swagger from './plugins';
 import { routes } from './routes';
+
+const validator: any = Joi;
 
 const { port } = config;
 
@@ -15,11 +18,10 @@ export default async (): Promise<Hapi.Server> => {
   });
 
   try {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    server.validator(require('@hapi/joi'));
-
-    await server.route(routes);
     await server.register(swagger);
+    await server.validator(validator);
+    await server.route(routes);
+
     await server.start();
     await createConnection();
 

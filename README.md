@@ -37,6 +37,12 @@
 $ npm run start:dev
 ```
 
+## Simple build for production
+
+```
+$ npm run build
+```
+
 ## Run the application for production
 
 ```

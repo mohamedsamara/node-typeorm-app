@@ -1,24 +1,24 @@
-import * as Joi from '@hapi/joi';
+import Joi from 'Joi';
 
 export default {
   create: {
-    payload: {
+    payload: Joi.object({
       name: Joi.string().optional()
-    }
+    })
   },
   getById: {
-    params: {
+    params: Joi.object({
       id: Joi.string().required()
-    }
+    })
   },
   updateById: {
-    params: {
+    params: Joi.object({
       id: Joi.string().required()
-    }
+    })
   },
   deleteById: {
-    params: {
+    params: Joi.object({
       id: Joi.string().required()
-    }
+    })
   }
 };
