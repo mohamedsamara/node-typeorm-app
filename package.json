@@ -19,7 +19,12 @@
     "type": "git",
     "url": "git+https://github.com/mohamedsamara/node-typeorm-app.git"
   },
-  "keywords": [],
+  "keywords": [
+    "node",
+    "hapi",
+    "typeorm",
+    "swagger"
+  ],
   "author": "Mohamed Samara (https://github.com/mohamedsamara)",
   "license": "MIT",
   "bugs": {

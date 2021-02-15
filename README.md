@@ -30,6 +30,17 @@
 2.  Move to the directory: `cd <PROJECT_NAME>`.<br />
 3.  Run `npm install` in order to install dependencies.<br />
 
+## TypeORM Production Usage
+
+ormconfig.json must be updated with below code:
+
+```jsx
+  "entities": ["build/entity/**/*.js"],
+  "migrations": ["build/migration/**/*.js"],
+  "subscribers": ["build/subscriber/**/*.js"]
+```
+
+
 
 ## Run the application for development
 

@@ -8,7 +8,6 @@ const Pack = require('../../package.json');
 const swaggerOptions: HapiSwagger.RegisterOptions = {
   info: {
     title: 'API Documentation',
-    // version: '1.0.0'
     version: Pack.version
   }
 };
