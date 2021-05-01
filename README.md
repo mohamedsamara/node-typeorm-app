@@ -28,7 +28,7 @@
 
 1.  Clone this repo using `git clone https://github.com/mohamedsamara/node-typeorm-app.git`
 2.  Move to the directory: `cd <PROJECT_NAME>`.<br />
-3.  Run `npm install` in order to install dependencies.<br />
+3.  Run `npm install` to install dependencies.<br />
 
 ## TypeORM Production Usage
 
